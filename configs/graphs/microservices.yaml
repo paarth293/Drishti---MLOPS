@@ -1,0 +1,11 @@
+nodes:
+  - cart
+  - payment
+  - user
+  - inventory
+  - checkout
+edges:
+  - {source: checkout, target: payment, weight: 1.0}
+  - {source: checkout, target: inventory, weight: 0.7}
+  - {source: cart, target: checkout, weight: 0.8}
+  - {source: user, target: cart, weight: 0.6}
