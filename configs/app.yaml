@@ -1,0 +1,20 @@
+app:
+  name: "Drishti"
+  env: "dev"
+  api_host: "0.0.0.0"
+  api_port: 8000
+  dashboard_port: 8501
+  batch_size: 1000
+  ingest_max_points: 100000
+  use_postgres: false
+  enable_otel: false
+  enable_prometheus: false
+  rca_top_k: 5
+  rca_window_minutes: 30
+  grafana_enabled: true
+paths:
+  data_dir: "./data"
+  reports_dir: "./reports"
+  config_graph_path: "./configs/data.yaml"
+features:
+  refresh_traces_interval_sec: 60

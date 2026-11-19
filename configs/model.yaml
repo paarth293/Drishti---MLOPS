@@ -1,0 +1,16 @@
+detector:
+  type: "forecast"
+  model: "AutoARIMA"
+  season_length: [60, 1440]
+  rolling_window: 120
+conformal:
+  alpha: 0.1
+  calibration_window: 500
+  per_series: true
+baseline:
+  mad_k: 4.0
+  rolling_window: 120
+rca:
+  alpha: 0.6
+  half_life_min: 10
+  edge_default_weight: 1.0
