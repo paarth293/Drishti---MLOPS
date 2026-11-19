@@ -1,6 +1,6 @@
 """Unit tests for Drishti GenAI Explainer and router fallback mode."""
 
-from app.copilot.explainer import explain_incident, _fallback_explanation
+from app.copilot.explainer import explain_incident
 
 
 def test_copilot_fallback_explanation_empty():

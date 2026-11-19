@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -27,10 +27,7 @@ def load_measurements(service_id: str, limit: int) -> pd.DataFrame:
     """Load the latest `limit` measurements for a service ordered chronologically."""
     settings = load_settings()
     engine = create_engine(settings.effective_db_url)
-    query = text(
-        "SELECT ts, y FROM measurements WHERE service_id = :service_id "
-        "ORDER BY ts DESC LIMIT :limit"
-    )
+    query = text("SELECT ts, y FROM measurements WHERE service_id = :service_id " "ORDER BY ts DESC LIMIT :limit")
     with engine.connect() as conn:
         df = pd.read_sql(query, conn, params={"service_id": service_id, "limit": limit})
     if df.empty:
@@ -57,9 +54,7 @@ def generate_report(
     """Generate Evidently HTML + JSON drift report and trigger retraining if drift is detected."""
     df = load_measurements(service_id, window_ref + window_cur)
     if len(df) < 10:
-        raise ValueError(
-            f"Not enough measurements for service '{service_id}' (found {len(df)}, need >= 10)."
-        )
+        raise ValueError(f"Not enough measurements for service '{service_id}' (found {len(df)}, need >= 10).")
 
     split_idx = min(window_ref, max(len(df) // 2, 1))
     ref_df = df.iloc[:split_idx][["y"]].copy()
@@ -97,7 +92,7 @@ def generate_report(
 
     summary = {
         "project": "Drishti",
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": datetime.now(UTC).isoformat(),
         "service_id": service_id,
         "window_ref": len(ref_df),
         "window_cur": len(cur_df),

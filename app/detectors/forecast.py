@@ -12,6 +12,7 @@ import pandas as pd
 
 try:
     from statsmodels.tsa.holtwinters import ExponentialSmoothing
+
     STATSMODELS_AVAILABLE = True
 except Exception:
     ExponentialSmoothing = None

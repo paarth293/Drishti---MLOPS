@@ -54,9 +54,7 @@ def explain_rca(payload: ExplainRequest | None = None) -> ExplainResponse:
             if not anomalies and ranking:
                 top_svc = str(ranking[0][0])
                 pts = get_anomalies(service_id=top_svc, limit=10)
-                anomalies = [
-                    p.model_dump() if hasattr(p, "model_dump") else dict(p) for p in pts
-                ]
+                anomalies = [p.model_dump() if hasattr(p, "model_dump") else dict(p) for p in pts]
         except Exception:  # noqa: BLE001
             ranking = []
 

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Any
@@ -51,14 +52,11 @@ def load_training_dataframe(service_id: str | None = None, limit: int = 2000) ->
         with engine.connect() as conn:
             if service_id:
                 query = text(
-                    "SELECT service_id, ts, y FROM measurements "
-                    "WHERE service_id = :sid ORDER BY ts DESC LIMIT :lim"
+                    "SELECT service_id, ts, y FROM measurements " "WHERE service_id = :sid ORDER BY ts DESC LIMIT :lim"
                 )
                 df = pd.read_sql(query, conn, params={"sid": service_id, "lim": limit})
             else:
-                query = text(
-                    "SELECT service_id, ts, y FROM measurements ORDER BY ts DESC LIMIT :lim"
-                )
+                query = text("SELECT service_id, ts, y FROM measurements ORDER BY ts DESC LIMIT :lim")
                 df = pd.read_sql(query, conn, params={"lim": limit})
         if not df.empty and len(df) >= 20:
             return df.sort_values("ts").reset_index(drop=True)
@@ -170,8 +168,8 @@ def run_mlflow_pipeline(
                 rca_list = summary_data.get("rca_topk", [])
                 if rca_list:
                     mlflow.log_metric("top1_rca_score", float(rca_list[0][1]))
-            except Exception:  # noqa: BLE001
-                pass
+            except Exception as exc:  # noqa: BLE001
+                logging.getLogger(__name__).warning("nab_summary_metric_skipped", extra={"reason": str(exc)})
 
         mlflow.sklearn.log_model(
             sk_model=pipeline,

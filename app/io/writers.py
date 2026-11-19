@@ -18,17 +18,14 @@ from app.settings import Settings
 
 try:
     from sqlalchemy.orm import DeclarativeBase
+
     class Base(DeclarativeBase):
         """Declarative base model for SQLAlchemy metadata."""
-except ImportError:
-    from sqlalchemy.orm import declarative_base
-    Base = declarative_base()
 
-try:
-    from datetime import UTC
 except ImportError:
-    from datetime import timezone
-    UTC = timezone.utc
+    from sqlalchemy.orm import declarative_base  # type: ignore[no-redef]
+
+    Base = declarative_base()  # type: ignore[assignment]
 
 
 class Measurement(Base):
@@ -57,9 +54,7 @@ class AnomalyRecord(Base):
     residual = Column(Float, nullable=True)
     q_alpha = Column(Float, nullable=True)
     is_anomaly = Column(Boolean, nullable=False)
-    created_at = Column(
-        DateTime(timezone=True), nullable=False, default=lambda: datetime.now(UTC)
-    )
+    created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(UTC))
 
 
 engine: Engine | None = None

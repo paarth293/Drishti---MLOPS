@@ -86,9 +86,14 @@ def overview_page(services: list[str]) -> None:
         metrics_text = ""
     metrics_values = _parse_metrics_text(metrics_text)
 
-    ingested = int(metrics_values.get("drishti_ingested_points", metrics_values.get("aiops_copilot_ingested_points", 0)))
+    ingested = int(
+        metrics_values.get("drishti_ingested_points", metrics_values.get("aiops_copilot_ingested_points", 0))
+    )
     anomalies = int(metrics_values.get("drishti_anomaly_count", metrics_values.get("aiops_copilot_anomaly_count", 0)))
-    latency = metrics_values.get("drishti_last_detection_latency_seconds", metrics_values.get("aiops_copilot_last_detection_latency_seconds", 0.0))
+    latency = metrics_values.get(
+        "drishti_last_detection_latency_seconds",
+        metrics_values.get("aiops_copilot_last_detection_latency_seconds", 0.0),
+    )
 
     c1, c2, c3 = st.columns(3)
     c1.metric("Ingested Points", f"{ingested:,}")
@@ -385,8 +390,6 @@ def graph_page() -> None:
         st.table(pd.DataFrame(topk["ranking"], columns=["Service", "Score"]))
     else:
         st.info("RCA ranking is empty. Run detection to populate scores.")
-
-
 
     st.subheader("Drishti AI Incident Copilot (LangChain + Gemini)")
     if st.button("Explain Incident with Drishti AI"):
