@@ -90,7 +90,7 @@ def parse_args() -> argparse.Namespace:
         Parsed namespace with simulation parameters.
     """
 
-    parser = argparse.ArgumentParser(description="Simulate services for AIOps Copilot.")
+    parser = argparse.ArgumentParser(description="Simulate services for Drishti.")
     parser.add_argument("--nb-services", type=int, default=5)
     parser.add_argument("--duration-min", type=float, default=120)
     parser.add_argument("--freq-s", type=int, default=60)

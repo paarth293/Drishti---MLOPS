@@ -1,1 +1,1 @@
-"""AIOps Copilot application package."""
+"""Drishti application package."""

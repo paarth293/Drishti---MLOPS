@@ -6,19 +6,29 @@ from collections.abc import Callable, Iterable
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import Boolean, DateTime, Float, Integer, String, UniqueConstraint, create_engine, func, select
+from sqlalchemy import Boolean, Column, DateTime, Float, Integer, String, UniqueConstraint, create_engine, func, select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.dialects.sqlite import insert as sqlite_insert
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 from app.models.schemas import AnomalyPoint, TimePoint
 from app.settings import Settings
 
+try:
+    from sqlalchemy.orm import DeclarativeBase
+    class Base(DeclarativeBase):
+        """Declarative base model for SQLAlchemy metadata."""
+except ImportError:
+    from sqlalchemy.orm import declarative_base
+    Base = declarative_base()
 
-class Base(DeclarativeBase):
-    """Declarative base model for SQLAlchemy metadata."""
+try:
+    from datetime import UTC
+except ImportError:
+    from datetime import timezone
+    UTC = timezone.utc
 
 
 class Measurement(Base):
@@ -27,10 +37,10 @@ class Measurement(Base):
     __tablename__ = "measurements"
     __table_args__ = (UniqueConstraint("service_id", "ts", name="uq_measurement_service_ts"),)
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    service_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
-    ts: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, index=True)
-    y: Mapped[float] = mapped_column(Float, nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    service_id = Column(String(128), nullable=False, index=True)
+    ts = Column(DateTime(timezone=True), nullable=False, index=True)
+    y = Column(Float, nullable=False)
 
 
 class AnomalyRecord(Base):
@@ -39,15 +49,15 @@ class AnomalyRecord(Base):
     __tablename__ = "anomalies"
     __table_args__ = (UniqueConstraint("service_id", "ts", name="uq_anomaly_service_ts"),)
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    service_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
-    ts: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, index=True)
-    y: Mapped[float] = mapped_column(Float, nullable=False)
-    y_hat: Mapped[float | None] = mapped_column(Float, nullable=True)
-    residual: Mapped[float | None] = mapped_column(Float, nullable=True)
-    q_alpha: Mapped[float | None] = mapped_column(Float, nullable=True)
-    is_anomaly: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    service_id = Column(String(128), nullable=False, index=True)
+    ts = Column(DateTime(timezone=True), nullable=False, index=True)
+    y = Column(Float, nullable=False)
+    y_hat = Column(Float, nullable=True)
+    residual = Column(Float, nullable=True)
+    q_alpha = Column(Float, nullable=True)
+    is_anomaly = Column(Boolean, nullable=False)
+    created_at = Column(
         DateTime(timezone=True), nullable=False, default=lambda: datetime.now(UTC)
     )
 

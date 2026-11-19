@@ -1,4 +1,4 @@
-"""End-to-end NAB showcase runner for the AIOps Copilot stack."""
+"""End-to-end NAB showcase runner for the Drishti stack."""
 
 from __future__ import annotations
 

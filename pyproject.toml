@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "drishti"
 version = "0.1.0"
-description = "Drishti: AIOps & MLOps monitoring, RCA, MLflow registry, and GenAI Copilot"
+description = "Drishti: Intelligent MLOps monitoring, RCA, MLflow registry, and GenAI Copilot"
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [
-  {name = "AIOps Copilot Team", email = "dev@aiops-copilot.local"}
+  {name = "Drishti Team", email = "i.m.paarthgupta@gmail.com"}
 ]
 license = {text = "MIT"}
 dependencies = [

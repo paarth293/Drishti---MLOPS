@@ -20,7 +20,7 @@ def create_app() -> FastAPI:
     configure_logging()
     load_settings()
     application = FastAPI(
-        title="Drishti — AIOps & MLOps Copilot",
+        title="Drishti — Intelligent MLOps Platform",
         version="0.1.0",
         description="Real-time anomaly detection and root cause analysis for microservices.",
     )
@@ -35,7 +35,7 @@ def create_app() -> FastAPI:
     @application.middleware("http")
     async def add_request_id(request: Request, call_next):
         request_id = request.headers.get("x-request-id") or str(uuid.uuid4())
-        logger = logging.getLogger("aiops.request")
+        logger = logging.getLogger("drishti.request")
         response = await call_next(request)
         logger.info(
             "request_completed",

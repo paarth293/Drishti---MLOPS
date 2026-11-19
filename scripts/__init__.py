@@ -1,1 +1,1 @@
-"""Utility scripts package for the AIOps Copilot project."""
+"""Utility scripts package for the Drishti project."""

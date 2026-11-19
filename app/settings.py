@@ -1,4 +1,4 @@
-"""Application settings management for AIOps Copilot."""
+"""Application settings management for Drishti."""
 
 from __future__ import annotations
 
@@ -31,18 +31,18 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    app_name: str = "AIOps Copilot"
+    app_name: str = "Drishti"
     app_env: str = Field(default="dev", alias="APP_ENV")
     api_host: str = Field(default="0.0.0.0", alias="API_HOST")  # noqa: S104
     api_port: int = Field(default=8000, alias="API_PORT")
     dashboard_port: int = 8501
 
-    db_url: str = Field(default="sqlite:///./data/aiops.db", alias="DB_URL")
+    db_url: str = Field(default="sqlite:///./data/drishti.db", alias="DB_URL")
     use_postgres: bool = Field(default=False, alias="USE_POSTGRES")
     postgres_host: str = Field(default="postgres", alias="POSTGRES_HOST")
-    postgres_db: str = Field(default="aiops", alias="POSTGRES_DB")
-    postgres_user: str = Field(default="aiops", alias="POSTGRES_USER")
-    postgres_password: str = Field(default="aiops", alias="POSTGRES_PASSWORD")
+    postgres_db: str = Field(default="drishti", alias="POSTGRES_DB")
+    postgres_user: str = Field(default="drishti", alias="POSTGRES_USER")
+    postgres_password: str = Field(default="drishti", alias="POSTGRES_PASSWORD")
 
     conformal_alpha: float = Field(default=0.1, alias="CONFORMAL_ALPHA")
     rca_alpha: float = Field(default=0.6, alias="RCA_ALPHA")
@@ -81,7 +81,7 @@ class Settings(BaseSettings):
         app_cfg = _load_yaml(config_app_path)
         app_section = app_cfg.get("app", {})
         if app_section:
-            values.setdefault("app_name", app_section.get("name", "AIOps Copilot"))
+            values.setdefault("app_name", app_section.get("name", "Drishti"))
             values.setdefault("app_env", app_section.get("env", "dev"))
             values.setdefault("api_host", app_section.get("api_host", "0.0.0.0"))  # noqa: S104
             values.setdefault("api_port", app_section.get("api_port", 8000))

@@ -42,5 +42,5 @@ jobs:
       - name: Build Docker images
         if: github.ref == 'refs/heads/main'
         run: |
-          docker build -f Dockerfile.api -t aiops-copilot-api .
-          docker build -f Dockerfile.streamlit -t aiops-copilot-streamlit .
+          docker build -f Dockerfile.api -t drishti-api .
+          docker build -f Dockerfile.streamlit -t drishti-streamlit .

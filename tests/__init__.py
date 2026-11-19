@@ -1,1 +1,1 @@
-"""Test suite package for AIOps Copilot."""
+"""Test suite package for Drishti."""

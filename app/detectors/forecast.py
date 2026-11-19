@@ -9,7 +9,13 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-from statsmodels.tsa.holtwinters import ExponentialSmoothing
+
+try:
+    from statsmodels.tsa.holtwinters import ExponentialSmoothing
+    STATSMODELS_AVAILABLE = True
+except Exception:
+    ExponentialSmoothing = None
+    STATSMODELS_AVAILABLE = False
 
 from app.detectors.baseline import rolling_median_mad_anomaly
 from app.detectors.conformal import per_series_calibration

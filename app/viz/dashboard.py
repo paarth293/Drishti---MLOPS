@@ -1,4 +1,4 @@
-"""Streamlit dashboard for AIOps Copilot."""
+"""Streamlit dashboard for Drishti."""
 
 from __future__ import annotations
 
@@ -86,9 +86,9 @@ def overview_page(services: list[str]) -> None:
         metrics_text = ""
     metrics_values = _parse_metrics_text(metrics_text)
 
-    ingested = int(metrics_values.get("aiops_copilot_ingested_points", 0))
-    anomalies = int(metrics_values.get("aiops_copilot_anomaly_count", 0))
-    latency = metrics_values.get("aiops_copilot_last_detection_latency_seconds", 0.0)
+    ingested = int(metrics_values.get("drishti_ingested_points", metrics_values.get("aiops_copilot_ingested_points", 0)))
+    anomalies = int(metrics_values.get("drishti_anomaly_count", metrics_values.get("aiops_copilot_anomaly_count", 0)))
+    latency = metrics_values.get("drishti_last_detection_latency_seconds", metrics_values.get("aiops_copilot_last_detection_latency_seconds", 0.0))
 
     c1, c2, c3 = st.columns(3)
     c1.metric("Ingested Points", f"{ingested:,}")
@@ -408,7 +408,7 @@ def graph_page() -> None:
 def main() -> None:
     """Entry point for the dashboard."""
 
-    st.set_page_config(page_title="Drishti — AIOps & MLOps Copilot", layout="wide")
+    st.set_page_config(page_title="Drishti — Intelligent MLOps Platform", layout="wide")
     st.sidebar.title("Drishti")
     graph_payload = _fetch_json("/graph")
     services = graph_payload.get("nodes", []) if graph_payload else []

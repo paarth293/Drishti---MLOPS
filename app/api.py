@@ -1,4 +1,4 @@
-"""FastAPI routes for AIOps Copilot."""
+"""FastAPI routes for Drishti MLOps Platform."""
 
 from __future__ import annotations
 
@@ -423,14 +423,15 @@ async def metrics(api_state: ApiState = Depends(get_state)) -> Response:
     """
 
     lines = [
-        "# HELP aiops_copilot_ingested_points Total ingested points.",
-        "# TYPE aiops_copilot_ingested_points counter",
-        f"aiops_copilot_ingested_points {api_state.metrics.get('ingested_points', 0)}",
-        "# HELP aiops_copilot_anomaly_count Detected anomalies.",
-        "# TYPE aiops_copilot_anomaly_count counter",
+        "# HELP drishti_ingested_points Total ingested points.",
+        "# TYPE drishti_ingested_points counter",
+        f"drishti_ingested_points {api_state.metrics.get('ingested_points', 0)}",
+        "# HELP drishti_anomaly_count Detected anomalies.",
+        "# TYPE drishti_anomaly_count counter",
+        f"drishti_anomaly_count {api_state.metrics.get('anomaly_count', 0)}",
+        "# HELP drishti_last_detection_latency_seconds Last detection latency in seconds.",
+        "# TYPE drishti_last_detection_latency_seconds gauge",
+        f"drishti_last_detection_latency_seconds {api_state.metrics.get('last_detection_latency_sec', 0.0)}",
         f"aiops_copilot_anomaly_count {api_state.metrics.get('anomaly_count', 0)}",
-        "# HELP aiops_copilot_last_detection_latency_seconds Last detection latency in seconds.",
-        "# TYPE aiops_copilot_last_detection_latency_seconds gauge",
-        f"aiops_copilot_last_detection_latency_seconds {api_state.metrics.get('last_detection_latency_sec', 0.0)}",
     ]
     return PlainTextResponse("\n".join(lines))

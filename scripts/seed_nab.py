@@ -1,4 +1,4 @@
-"""Seed NAB dataset series into the AIOps Copilot storage."""
+"""Seed NAB dataset series into the Drishti storage."""
 
 from __future__ import annotations
 

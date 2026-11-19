@@ -30,7 +30,7 @@ from sqlalchemy import create_engine, text
 load_dotenv()
 
 MODEL_NAME = "drishti-anomaly-detector"
-EXPERIMENT_NAME = "drishti-aiops-monitoring"
+EXPERIMENT_NAME = "drishti-mlops-monitoring"
 
 
 def _resolve_db_url() -> str:
@@ -40,7 +40,7 @@ def _resolve_db_url() -> str:
 
         return load_settings().effective_db_url
     except Exception:  # noqa: BLE001
-        return os.getenv("DB_URL", "sqlite:///./data/aiops.db")
+        return os.getenv("DB_URL", "sqlite:///./data/drishti.db")
 
 
 def load_training_dataframe(service_id: str | None = None, limit: int = 2000) -> pd.DataFrame:

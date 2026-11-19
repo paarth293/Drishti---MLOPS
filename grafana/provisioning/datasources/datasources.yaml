@@ -1,6 +1,6 @@
 apiVersion: 1
 datasources:
-  - name: AIOps Postgres
+  - name: Drishti Postgres
     type: postgres
     access: proxy
     url: ${POSTGRES_HOST}:5432
