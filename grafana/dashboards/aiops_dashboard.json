@@ -1,0 +1,73 @@
+{
+  "id": null,
+  "title": "AIOps Copilot",
+  "timezone": "browser",
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Service Metrics",
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "aiops"
+          },
+          "rawSql": "SELECT ts AS time, y, service_id FROM measurements WHERE $__timeFilter(ts)",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      },
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 9 }
+    },
+    {
+      "type": "stat",
+      "title": "Anomalies Last Hour",
+      "targets": [
+        {
+          "refId": "B",
+          "datasource": {
+            "type": "postgres",
+            "uid": "aiops"
+          },
+          "rawSql": "SELECT COUNT(*) FROM anomalies WHERE ts >= NOW() - INTERVAL '1 hour'",
+          "format": "table"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 4 }
+    },
+    {
+      "type": "table",
+      "title": "Recent Anomalies",
+      "targets": [
+        {
+          "refId": "C",
+          "datasource": {
+            "type": "postgres",
+            "uid": "aiops"
+          },
+          "rawSql": "SELECT service_id, ts, y, residual, q_alpha, is_anomaly FROM anomalies ORDER BY ts DESC LIMIT 50",
+          "format": "table"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 9, "w": 24, "h": 7 }
+    }
+  ],
+  "templating": {
+    "list": []
+  }
+}
