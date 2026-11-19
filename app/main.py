@@ -9,6 +9,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import router
+from app.copilot.router import router as copilot_router
 from app.logging_conf import configure_logging
 from app.settings import load_settings
 
@@ -49,6 +50,7 @@ def create_app() -> FastAPI:
         return response
 
     application.include_router(router)
+    application.include_router(copilot_router)
     return application
 
 
